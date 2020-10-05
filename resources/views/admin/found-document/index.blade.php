@@ -41,7 +41,9 @@
             <th>Reported date</th>
            
             <td>Received</td>
+            
             <td> Picture </td>
+          
             
            <td>Action</td>
             
@@ -62,13 +64,17 @@
             <td> 
 
                 @if($document->received)
-              <label class="text-success">Yes</label> 
+        
+              <span class="badge badge-success">YES</span>
 
               @else
-              <label class="text-warning" >No</label> 
+              <span class="badge badge-warning">NO</span>
                     
                 @endif
             </td>
+
+
+            
 
         <td><a href="{{asset('storage/found_documents/'.$document->picture)}}">view picture</a></td>
             
@@ -79,9 +85,11 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                         
-                    <a class="dropdown-item" href="{{route('lost_documents.edit',$document->id)}}"><i class="dw dw-edit2"></i> Edit</a>
+                    <a class="dropdown-item" href="{{route('found-documents.edit',$document->id)}}"><i class="dw dw-edit2"></i> Edit</a>
 
-                         <form method="POST" action="{{route('lost_documents.destroy',$document->id)}}">
+                    <a class="dropdown-item" href="{{route('found-documents.show',$document->id)}}"><i class="dw dw-eye"></i> Show</a>
+
+                         <form method="POST" action="{{route('found-documents.destroy',$document->id)}}">
                             @method('delete')
                             @csrf
 

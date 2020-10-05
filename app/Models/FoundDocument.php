@@ -23,4 +23,12 @@ class FoundDocument extends Model
         return $this->belongsTo('App\Models\User');
 
     }
+
+
+    function lost_document()
+    {
+
+        return $this->belongsTo('App\Models\LostDocument');
+
+    }
 }

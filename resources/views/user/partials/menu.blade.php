@@ -15,7 +15,7 @@
 
 
                 <li>
-                    <a href="home.html" class="dropdown-toggle no-arrow">
+                    <a href="{{route('home')}}" class="dropdown-toggle no-arrow">
                         <span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
                     </a>
                 </li>

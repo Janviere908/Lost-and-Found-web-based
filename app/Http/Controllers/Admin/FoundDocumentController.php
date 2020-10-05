@@ -132,7 +132,11 @@ class FoundDocumentController extends Controller
      */
     public function show($id)
     {
-        //
+        $document_types=DocumentType::all();
+        $document=FoundDocument::find($id);
+
+        
+       return view('admin.found-document.show',['document_types'=>$document_types,'document'=>$document]);
     }
 
     /**
