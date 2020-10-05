@@ -24,5 +24,13 @@ class LostDocument extends Model
 
     }
 
+
+    function lost_documents()
+    {
+
+        return $this->hasMany('App\Models\LostDocument');
+
+    }
+
     
 }

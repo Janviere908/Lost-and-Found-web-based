@@ -7,7 +7,7 @@
 
 @section('menu')
 
-@include('user.partials.menu')
+@include('admin.partials.menu')
 
 
 
@@ -39,7 +39,7 @@
     </div>
    @endif
 
-<form method="post" action="{{route('lost_documents.update', $document->id)}}">
+<form method="post" action="{{route('lost-documents.update', $document->id)}}">
     @method('put')
     @csrf
     <div class="form-group row">
@@ -68,16 +68,32 @@
         <label class="col-sm-12 col-md-2 col-form-label">Document number</label>
         <div class="col-sm-12 col-md-10">
         <input  type="text" class="form-control @error('document_number') is-invalid @enderror" name="document_number" required autocomplete="document_number" value="{{$document->document_number}}"   autofocus>
-        </div>
+       
+        @error('document_number')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+      @enderror
+    </div>
     </div>
 
 
-    @error('document_number')
+  
+
+    <div class="form-group row">
+        <label class="col-sm-12 col-md-2 col-form-label">Found</label>
+        <div class="col-sm-12 col-md-10">
+
+        
+        <input type="checkbox" @if($document->found) checked @endif  class="switch-btn" name="found" data-color="#0099ff">
+        @error('found')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
-    @enderror
+        @enderror
 
+    </div>
+    </div>
 
    
 

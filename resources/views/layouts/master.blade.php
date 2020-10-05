@@ -21,6 +21,13 @@
 	<link rel="stylesheet" type="text/css" href="{{asset('master/vendors/styles/style.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('master/src/plugins/datatables/css/dataTables.bootstrap4.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('master/src/plugins/datatables/css/responsive.bootstrap4.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('master/src/plugins/switchery/switchery.min.css')}}">
+
+	<!-- bootstrap-tagsinput css -->
+	<link rel="stylesheet" type="text/css" href="{{asset('master/src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css')}}">
+	<!-- bootstrap-touchspin css -->
+	<link rel="stylesheet" type="text/css" href="{{asset('master//plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('master//styles/style.css')}}">
 
 
 
@@ -270,5 +277,12 @@
 	<script src="{{asset('master/src/plugins/datatables/js/vfs_fonts.js')}}"></script>
 	<!-- Datatable Setting js -->
 	<script src="{{asset('master/vendors/scripts/datatable-setting.js')}}"></script>
+
+	<script src="{{asset('master/src/plugins/switchery/switchery.min.js')}}"></script>
+	<!-- bootstrap-tagsinput js -->
+	<script src="{{asset('master/src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')}}"></script>
+	<!-- bootstrap-touchspin js -->
+	<script src="{{asset('master//plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js')}}"></script>
+	<script src="{{asset('master/vendors/scripts/advanced-components.js')}}"></script>
 </body>
 </html>

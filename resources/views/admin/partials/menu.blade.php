@@ -19,6 +19,13 @@
                         <span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
                     </a>
                 </li>
+
+                
+                <li>
+                    <a href="{{route('lost-documents.index')}}" class="dropdown-toggle no-arrow">
+                        <span class="micon dw dw-right-arrow1"></span><span class="mtext">Lost documents</span>
+                    </a>
+                </li>
               <!--  <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="micon dw dw-right-arrow1"></span><span class="mtext">Lost Documents</span>

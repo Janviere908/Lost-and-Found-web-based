@@ -29,7 +29,7 @@ class LostDocumentController extends Controller
     }
     public function index()
     {
-        $lost_documents=LostDocument::all();
+        $lost_documents=Auth::user()->lost_documents;
         
 
         return view('user.lost-document.index',['lost_documents'=>$lost_documents]);

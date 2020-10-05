@@ -1,24 +1,37 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
+use App\Models\LostDocument;
+use App\Models\FoundDocument;
+use App\Models\User;
+use App\Models\DocumentType;
+use App\Notifications\DocumentFoundNotification;
+use Auth;
+
 class LostDocumentController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-   
+  
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
-        //
+        $lost_documents=LostDocument::all();
+        
+
+        return view('admin.lost-document.index',['lost_documents'=>$lost_documents]);
     }
 
     /**
@@ -28,7 +41,8 @@ class LostDocumentController extends Controller
      */
     public function create()
     {
-        //
+        $document_types=DocumentType::all();
+        return view('admin.lost-document.create',['document_types'=>$document_types]);
     }
 
     /**
@@ -39,7 +53,24 @@ class LostDocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+
+            'document_type'=>'required',
+            'document_number'=>'required',
+           
+
+        ]);
+
+        $lostDocument= new LostDocument;
+
+        $lostDocument->document_type_id=$request->document_type;
+        $lostDocument->document_number=$request->document_number;
+        $lostDocument->user_id=Auth::user()->id;
+
+        $lostDocument->save();
+
+        return redirect()->route('lost-documents.index')->with('success',"Lost document reported.");
+
     }
 
     /**
@@ -50,7 +81,11 @@ class LostDocumentController extends Controller
      */
     public function show($id)
     {
-        //
+        $document_types=DocumentType::all();
+        $document=LostDocument::find($id);
+
+        
+       return view('admin.lost-document.show',['document_types'=>$document_types,'document'=>$document]);
     }
 
     /**
@@ -61,7 +96,11 @@ class LostDocumentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $document_types=DocumentType::all();
+        $document=LostDocument::find($id);
+
+        
+       return view('admin.lost-document.edit',['document_types'=>$document_types,'document'=>$document]);
     }
 
     /**
@@ -73,7 +112,36 @@ class LostDocumentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+
+            'document_type'=>'required',
+            'document_number'=>'required',
+           
+
+        ]);
+
+
+
+        $lostDocument=LostDocument::find($id);
+
+        $lostDocument->document_type_id=$request->document_type;
+        $lostDocument->document_number=$request->document_number;
+        $found= $request->boolean('found');
+
+        if($found){
+ 
+         $lostDocument->found=1;
+        }
+ 
+ 
+        else{
+         $lostDocument->found=0;
+        }
+
+        $lostDocument->save();
+
+        return redirect()->route('lost-documents.index')->with('success',"Lost document updated.");
+
     }
 
     /**
@@ -84,6 +152,8 @@ class LostDocumentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $lostDocument=LostDocument::find($id);
+        $lostDocument->delete();
+        return redirect()->back()->with('success','Document deleted.' );
     }
 }

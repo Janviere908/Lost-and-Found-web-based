@@ -2,7 +2,7 @@
 
 @section('menu')
 
-@include('user.partials.menu')
+@include('admin.partials.menu')
 
 
 
@@ -60,10 +60,10 @@
             <td> 
 
                 @if($document->found)
-              <label class="text-success">Yes</label> 
+              <label class="badge badge-success">Yes</label> 
 
               @else
-              <label class="text-warning" >No</label> 
+              <label class="badge badge-warning" >No</label> 
                     
                 @endif
             </td>
@@ -86,9 +86,10 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                         
-                    <a class="dropdown-item" href="{{route('lost_documents.edit',$document->id)}}"><i class="dw dw-edit2"></i> Edit</a>
+                    <a class="dropdown-item" href="{{route('lost-documents.edit',$document->id)}}"><i class="dw dw-edit2"></i> Edit</a>
 
-                         <form method="POST" action="{{route('lost_documents.destroy',$document->id)}}">
+                    <a class="dropdown-item" href="{{route('lost-documents.show',$document->id)}}"><i class="dw dw-edit2"></i> Show</a>
+                         <form method="POST" action="{{route('lost-documents.destroy',$document->id)}}">
                             @method('delete')
                             @csrf
 

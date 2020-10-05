@@ -147,7 +147,11 @@ class FoundDocumentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $document_types=DocumentType::all();
+        $document=FoundDocument::find($id);
+
+        
+       return view('admin.found-document.edit',['document_types'=>$document_types,'document'=>$document]);
     }
 
     /**
@@ -159,7 +163,32 @@ class FoundDocumentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+
+            'document_number'=>'required',
+            'document_type'=>'required',
+        ]);
+
+      $foundDocument = FoundDocument::find($id);
+      
+      $foundDocument->document_number=$request->document_number;
+      $foundDocument->document_type_id=$request->document_type;
+      $received= $request->boolean('received');
+
+       if($received){
+
+        $foundDocument->received=1;
+       }
+
+
+       else{
+        $foundDocument->received=0;
+       }
+
+
+       $foundDocument->save();
+
+       return redirect()->route('found-documents.index')->with('success','Found document updated');
     }
 
     /**
