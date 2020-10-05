@@ -3,7 +3,7 @@
 <head>
 	<!-- Basic Page Info -->
 	<meta charset="utf-8">
-	<title>IT- MIS</title>
+	<title>Lost Document App</title>
 
 	<!-- Site favicon -->
 	<link rel="apple-touch-icon" sizes="180x180" href="vendors/images/apple-touch-icon.png">
@@ -28,7 +28,8 @@
 	<!-- bootstrap-touchspin css -->
 	<link rel="stylesheet" type="text/css" href="{{asset('master//plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('master//styles/style.css')}}">
-
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
 
 	<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -136,7 +137,7 @@
 				<div class="dropdown">
 					<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 						<span class="user-icon">
-							<img src="vendors/images/photo1.jpg" alt="">
+						<img src="{{asset('userAvatar/user.png')}}" alt="">
 						</span>
 					<span class="user-name">{{ Auth::user()->name}}</span>
 					</a>
@@ -254,7 +255,7 @@
 				</div>
 			</div>
 			<div class="footer-wrap pd-20 mb-20 card-box">
-				All right reserved to MIS.
+				All right reserved to Lost Document App.
 			</div>
 		</div>
 	</div>
@@ -284,5 +285,19 @@
 	<!-- bootstrap-touchspin js -->
 	<script src="{{asset('master//plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js')}}"></script>
 	<script src="{{asset('master/vendors/scripts/advanced-components.js')}}"></script>
+
+	<script>
+
+		// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.js-example-basic-single').select2(
+
+
+		{
+    placeholder: "Type here found document number",
+    allowClear: true}
+	);
+});
+	</script>
 </body>
 </html>

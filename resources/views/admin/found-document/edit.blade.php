@@ -7,7 +7,7 @@
 
 @section('menu')
 
-@include('user.partials.menu')
+@include('admin.partials.menu')
 
 
 

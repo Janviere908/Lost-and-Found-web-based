@@ -1,31 +1,35 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\models\Invoice;
 use Auth;
-use App\Models\User;
 
-class UserController extends Controller
+class InvoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-
     public function __construct()
     {
         $this->middleware('auth');
     }
     public function index()
     {
+        if(Auth::user()->is_admin)
+        {
 
+            $invoices=Invoice::all();  
+        }
+        else{
+            $invoices=Auth::user()->invoices;
+        }
+       
 
-        $foundDocuments=Auth::user()->found_documents->count();
-        $lostDocuments=Auth::user()->lost_documents->count();
-        return view('user.user.index',['foundDocuments'=>$foundDocuments,'lostDocuments'=>$lostDocuments]);
+        return view('invoice.index', ['invoices'=>$invoices]);
     }
 
     /**

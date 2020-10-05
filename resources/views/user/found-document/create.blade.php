@@ -15,7 +15,7 @@
 
 @section('path')
 <div class="title">
-    <h4>New lost document</h4>
+    <h4>New Found document</h4>
 </div>
 <nav aria-label="breadcrumb" role="navigation">
     <ol class="breadcrumb">
@@ -40,7 +40,7 @@
 
 <form method="post" action="{{route('found_documents.store')}}" enctype="multipart/form-data">
     @csrf
-    <div class="form-group row">
+    <!--<div class="form-group row">
         <label class="col-sm-12 col-md-2 col-form-label">Document type</label>
         <div class="col-sm-12 col-md-10">
             <select class="form-control @error('document_type') is-invalid @enderror" name="document_type" value="{{ old('document_type') }}" required autocomplete="document_type"   autofocus>
@@ -80,7 +80,26 @@
              @enderror
     </div>
     </div>
+-->
 
+
+
+<div class="form-group row">
+
+    <label class="col-sm-12 col-md-2 col-form-label">Document number</label>
+    <div class="col-sm-12 col-md-10">
+<select class="js-example-basic-single form-control" style="width:100%" name="lost_document">
+
+
+    @foreach($lostDocuments as $key => $document)
+<option value="{{$document->id}}">{{$document->document_number}}</option>
+    @endforeach
+   
+     
+    
+  </select>
+</div>
+</div> 
 
 
     <div class="form-group row">

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::get('markAsRead', function(){
@@ -41,3 +41,13 @@ Route::get('/hom', [App\Http\Controllers\Admin\AdminController::class, 'index'])
 
 Route::resource('lost-documents', App\Http\Controllers\Admin\LostDocumentController::class);
 Route::resource('found-documents', App\Http\Controllers\Admin\FoundDocumentController::class);
+Route::resource('invoices', App\Http\Controllers\InvoiceController::class);
+
+
+
+Route::get('/paymentSuccess', [App\Http\Controllers\PaymentController::class, 'paymentSuccess'])->name('paymentSuccess');
+Route::get('/paymentCancel', [App\Http\Controllers\PaymentController::class, 'paymentCancel'])->name('paymentCancel');
+
+
+
+Route::get('/paymentSuccess/{invoiceID}', [App\Http\Controllers\PaymentController::class, 'paymentHandle'])->name('paymentHandle');

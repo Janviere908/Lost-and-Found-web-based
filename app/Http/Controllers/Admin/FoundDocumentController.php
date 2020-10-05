@@ -12,6 +12,8 @@ use App\Models\User;
 use App\Models\DocumentType;
 use App\Notifications\DocumentFoundNotification;
 use Auth;
+use App\models\Invoice;
+
 
 
 class FoundDocumentController extends Controller

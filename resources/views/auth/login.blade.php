@@ -46,10 +46,28 @@
 					</ul>
 				</div>
 			</div>
+			<div style="margin-left:1000px" class="login-menu">
+				<ul>
+					<li><a href="{{route('login')}}">Login</a></li>
+					
+			
+				</ul>
+				
+				
+
+				
+			</div>
+
 			<div class="login-menu">
 				<ul>
-					<li><a href="register.html">Register</a></li>
+					
+					<li><a class="btn btn-outline-primary" href="{{route('register')}}}">Register</a></li>
+			
 				</ul>
+				
+				
+
+				
 			</div>
 		</div>
 	</div>
@@ -120,7 +138,7 @@
 									</div>
 									<div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR</div>
 									<div class="input-group mb-0">
-										<a class="btn btn-outline-primary btn-lg btn-block" href="register.html">Register To Create Account</a>
+									<a class="btn btn-outline-primary btn-lg btn-block" href="{{route('register')}}">Register To Create Account</a>
 									</div>
 								</div>
 							</div>

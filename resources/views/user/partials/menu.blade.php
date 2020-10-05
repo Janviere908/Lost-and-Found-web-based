@@ -21,7 +21,7 @@
                 </li>
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-right-arrow1"></span><span class="mtext">Lost Documents</span>
+                        <span class="micon dw dw-right-arrow1"></span><span class="mtext">My Lost Documents</span>
                  
                       
                     </a>
@@ -36,12 +36,12 @@
                
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-right-arrow1"></span><span class="mtext">Found Documents</span>
+                        <span class="micon dw dw-right-arrow1"></span><span class="mtext">My Found Documents</span>
                  
                       
                     </a>
                     <ul class="submenu">
-                        <li><a href="{{route('found_documents.index')}}">All found document</a></li>
+                        <li><a href="{{route('found_documents.index')}}">Found document</a></li>
                             <li><a href="{{route('found_documents.create')}}">New found document </a></li>
                         
                         </ul>
@@ -49,6 +49,12 @@
                 </li>
 
 
+
+                <li>
+                    <a href="{{route('invoices.index')}}" class="dropdown-toggle no-arrow">
+                        <span class="micon dw dw-right-arrow1"></span><span class="mtext">My invoces</span>
+                    </a>
+                </li>
 
 
 

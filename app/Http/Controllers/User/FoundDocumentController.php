@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\DocumentType;
 use App\Notifications\DocumentFoundNotification;
 use Auth;
+use App\models\Invoice;
 
 
 class FoundDocumentController extends Controller
@@ -42,7 +43,8 @@ class FoundDocumentController extends Controller
     public function create()
     {
         $document_types=DocumentType::all();
-        return view('user.found-document.create',['document_types'=>$document_types]);
+        $lostDocuments=lostDocument::where('found', 0)->get();
+        return view('user.found-document.create',['document_types'=>$document_types,'lostDocuments'=>$lostDocuments]);
     }
 
     /**
@@ -54,14 +56,14 @@ class FoundDocumentController extends Controller
     public function store(Request $request)
     {
      $request->validate([
-            'document_number'=>'required',
+            'lost_document'=>'required',
             
            
             'picture'=>'required|image',
            
             
             
-            'document_type'=>'required',
+         
    
            ]);
 
@@ -75,51 +77,88 @@ class FoundDocumentController extends Controller
             
              $request->picture->storeAs('found_documents',$picture, 'public');
 
+             $lostDocument=LostDocument::find($request->lost_document);
+             
+              $lostDocument->found=1;
+              $lostDocument->save();
+
+              $document= new FoundDocument;
            
+                  $document->document_number=$lostDocument->document_number;
+                 $document->lost_document_id=$lostDocument->id;
+               $document->document_type_id=$lostDocument->document_type_id;
+                   $document->user_id=Auth::user()->id;
+               $document->picture=$picture;
+            
+                   $document->save();
 
-            $checkLostDocument= LostDocument::where('document_number', $request->document_number)->get();
+                  //notify user by email
 
-            if($checkLostDocument->count()>0){
-
-
-                foreach($checkLostDocument as $lostDocument){
-
-                    $lostDocument->found=1;
-                    $lostDocument->save();
-                    $document= new FoundDocument;
-           
-                    $document->document_number=$request->document_number;
-                    $document->lost_document_id=$lostDocument->id;
-                    $document->document_type_id=$request->document_type;
-                    $document->user_id=Auth::user()->id;
-                    $document->picture=$picture;
-                    
-                    $document->save();
-
-                    //notify user by email
-
-                    $data =['document_number'=>$lostDocument->document_number,'lost_document_id'=>$lostDocument->id];
+                   $data =['document_number'=>$lostDocument->document_number,'lost_document_id'=>$lostDocument->id];
                    
 
-                    $lostDocument->user->notify(new DocumentFoundNotification($data));
+                  $lostDocument->user->notify(new DocumentFoundNotification($data));
+
+              //create invoice
+              
+              $invoice= new Invoice;
+
+              $invoice->totalAmount=5;
+              $invoice->paid=0;
+              $invoice->user_id=$lostDocument->user->id;
+              $invoice->lost_document_id=$lostDocument->id;
+              $invoice->found_document_id=$document->id;
+
+              $invoice->save();
+             
+
+
+            //$checkLostDocument= LostDocument::where('document_number', $request->document_number)->get();
+
+
+
+          /**    if($checkLostDocument->count()>0){
+
+
+             *   foreach($checkLostDocument as $lostDocument){
+
+             *       $lostDocument->found=1;
+              *      $lostDocument->save();
+                *    $document= new FoundDocument;
+           *
+            *        $document->document_number=$request->document_number;
+            *        $document->lost_document_id=$lostDocument->id;
+            *        $document->document_type_id=$request->document_type;
+            *        $document->user_id=Auth::user()->id;
+            *        $document->picture=$picture;
+            *        
+            *        $document->save();
+
+            *        //notify user by email
+
+             *       $data =['document_number'=>$lostDocument->document_number,'lost_document_id'=>$lostDocument->id];
+                   
+
+             *       $lostDocument->user->notify(new DocumentFoundNotification($data));
 
                    
-                }
-            }
+               * }
+          *  }
 
           
-        else{
+        *else{
          
-            $document= new FoundDocument;
+         *   $document= new FoundDocument;
            
-           $document->document_number=$request->document_number;
-           $document->document_type_id=$request->document_type;
-           $document->user_id=Auth::user()->id;
-           $document->picture=$picture;
+         *  $document->document_number=$request->document_number;
+          * $document->document_type_id=$request->document_type;
+          * $document->user_id=Auth::user()->id;
+         *  $document->picture=$picture;
            
-           $document->save();
+         *  $document->save();
 
-        }
+        *}
+        */
    
            return redirect()->route('found_documents.index')->with('success', 'Found document reported');
     }

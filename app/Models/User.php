@@ -52,4 +52,10 @@ class User extends Authenticatable
 
         return $this->hasMany('App\Models\LostDocument');
     }
+
+    function invoices(){
+
+
+        return $this->hasMany('App\Models\Invoice');
+    }
 }

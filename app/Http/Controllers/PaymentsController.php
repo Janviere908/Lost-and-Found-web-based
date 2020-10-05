@@ -1,31 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Auth;
-use App\Models\User;
+use Illuminate\Http\Request;
+use Srmklive\PayPal\Services\ExpressCheckout;
+use Srmklive\PayPal\Facades\PayPal;
+use Srmklive\PayPal\Services\AdaptivePayments;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
-class UserController extends Controller
+
+
+
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     public function index()
     {
-
-
-        $foundDocuments=Auth::user()->found_documents->count();
-        $lostDocuments=Auth::user()->lost_documents->count();
-        return view('user.user.index',['foundDocuments'=>$foundDocuments,'lostDocuments'=>$lostDocuments]);
+        //
     }
 
     /**
@@ -35,7 +30,51 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $data = [];
+
+        $data['items'] = [
+
+            [
+
+                'name' => 'ItSolutionStuff.com',
+
+                'price' => 100,
+
+                'desc'  => 'Description for ItSolutionStuff.com',
+
+                'qty' => 1
+
+            ]
+
+        ];
+
+  
+
+        $data['invoice_id'] = 1;
+
+        $data['invoice_description'] = "Order #{$data['invoice_id']} Invoice";
+
+        $data['return_url'] = route('paymentSuccess');
+
+        $data['cancel_url'] = route('paymentCancel');
+
+        $data['total'] = 100;
+
+  
+
+        $provider = new ExpressCheckout;
+
+  
+
+        $response = $provider->setExpressCheckout($data);
+
+  
+
+        $response = $provider->setExpressCheckout($data, true);
+
+  
+
+        return redirect($response['paypal_link']);
     }
 
     /**
@@ -70,6 +109,18 @@ class UserController extends Controller
     {
         //
     }
+
+
+    public function paymentSuccess()
+    {
+        echo "sucess";
+    }
+
+    public function paymentCancel()
+    {
+        echo "cancel";
+    }
+
 
     /**
      * Update the specified resource in storage.
